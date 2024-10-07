@@ -1,0 +1,126 @@
+/* General styling for the page layout */
+.signin-page-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+/* Left side with background image */
+.signin-image-container {
+  flex: 1;
+  background-image: url('../../assets/images/slider-images/signin-Image.jpeg'); /* Add background image */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.8); /* Darkens the background for better readability */
+}
+
+/* Right side with the sign-in form */
+.signin-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 40px;
+}
+
+/* Sign-in card styling */
+.signin-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.signin-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo */
+.signin-logo {
+  width: 120px;
+  margin-bottom: 25px;
+}
+
+/* Input fields styling */
+.signin-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.signin-input:focus {
+  border-color: #007bff;
+}
+
+/* Sign-in button */
+.signin-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.signin-button:hover {
+  background-color: #0056b3;
+}
+
+/* Links */
+.signin-links {
+  margin: 20px 0;
+}
+
+.signup-link, .forgot-password-link {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 0 10px;
+}
+
+.signup-link:hover, .forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+/* Social sign-in section */
+.signin-social {
+  margin-top: 30px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+.facebook-icon {
+  color: #1877f2;
+}
+
+.google-icon {
+  font-size: 50px;
+}

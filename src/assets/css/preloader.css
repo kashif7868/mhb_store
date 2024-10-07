@@ -1,0 +1,63 @@
+/* Preloader container */
+.preloader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7; /* Light background */
+}
+
+/* Preloader icon animation */
+.preloader-icon {
+  width: 80px;
+  height: 80px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #ffa500; /* Orange accent color */
+  border-right: 5px solid #00aaff; /* Blue complementary color */
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1.5s linear infinite; /* Smooth rotation */
+  box-shadow: 0px 0px 15px rgba(0, 170, 255, 0.5); /* Soft glow effect */
+}
+
+/* Shopping cart icon */
+.shopping-cart-icon {
+  font-size: 36px;
+  color: #00aaff; /* Blue icon color */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: bounce 1.5s ease-in-out infinite; /* Bouncing animation */
+  z-index: 10000; /* Keep icon on top */
+}
+
+/* Keyframe for rotating the loader */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Keyframe for the bouncing effect */
+@keyframes bounce {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -55%) scale(1.2); /* Slight enlargement */
+  }
+}
+
+/* Glow pulse animation around the loader */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0px 0px 10px rgba(253, 237, 6, 0.685);
+  }
+  50% {
+    box-shadow: 0px 0px 20px rgba(0, 170, 255, 0.7); /* Blue glow intensity */
+  }
+}
