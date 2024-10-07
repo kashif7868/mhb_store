@@ -9,10 +9,12 @@ import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // To handle dropdown visibility
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
   const location = useLocation();
 
   const handleDropdown = (category) => {
@@ -32,7 +34,6 @@ const Navbar = () => {
             </Link>
           </li>
 
-          {/* Dropdown example */}
           <li className="dropdown" onClick={() => handleDropdown('clothing')}>
             <span className={activeDropdown === 'clothing' ? 'active-category' : ''}>Clothing</span>
             <div className={`dropdown-content ${activeDropdown === 'clothing' ? 'show' : ''}`}>
@@ -69,9 +70,10 @@ const Navbar = () => {
               <Link to="/gadgets/airpods" onClick={toggleMenu}>Air Pods</Link>
             </div>
           </li>
-          <li className="dropdown" onMouseEnter={() => handleDropdown('KidsToys')} >
-            <span className={activeDropdown === 'KidsToys' ? 'active-category' : ''}>Kids Toys</span>
-            <div className={`dropdown-content ${activeDropdown === 'KidsToys' ? 'show' : ''}`}>
+
+          <li className="dropdown" onClick={() => handleDropdown('kids-toys')}>
+            <span className={activeDropdown === 'kids-toys' ? 'active-category' : ''}>Kids Toys</span>
+            <div className={`dropdown-content ${activeDropdown === 'kids-toys' ? 'show' : ''}`}>
               <Link to="/toys/action-figures" onClick={toggleMenu}>Action Figures</Link>
               <Link to="/toys/lego" onClick={toggleMenu}>LEGO</Link>
               <Link to="/toys/dolls" onClick={toggleMenu}>Dolls</Link>

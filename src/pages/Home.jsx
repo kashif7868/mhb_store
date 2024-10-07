@@ -101,7 +101,7 @@ const Home = () => {
                   {favoriteProducts.includes(product.id) ? <FaHeart className="fav-icon-filled" /> : <FaRegHeart className="fav-icon-empty" />}
                 </div>
                 <div className="view-product-container" onClick={() => handleViewProduct(product)}>
-                  <AiFillEye className='view-icon' />
+                  <AiFillEye className="view-icon" />
                 </div>
               </div>
               <img src={product.image} alt={product.name} className="product-image" />
@@ -110,7 +110,7 @@ const Home = () => {
               <p className="discount-tag">50% Off</p>
               <p>Price: <s>PKR {convertToPKR(product.price)}</s></p>
               <p>Discounted Price: <strong>PKR {convertToPKR(product.price / 2)}</strong></p>
-              <button className="add-to-cart-button"><GiShoppingCart className='cart-icon' /> Add to Cart</button>
+              <button className="add-to-cart-button"><GiShoppingCart className="cart-icon" /> Add to Cart</button>
             </div>
           ))}
         </div>
@@ -123,8 +123,13 @@ const Home = () => {
           <div className="product-grid-container">
             {favoriteProductsList.map((product) => (
               <div key={product.id} className="product-card">
-                <div className="favorite-icon" onClick={() => toggleFavorite(product.id)}>
-                  {favoriteProducts.includes(product.id) ? <FaHeart className="fav-icon-filled" /> : <FaRegHeart className="fav-icon-empty" />}
+                <div className="product-fav-view-container">
+                  <div className="favorite-icon" onClick={() => toggleFavorite(product.id)}>
+                    {favoriteProducts.includes(product.id) ? <FaHeart className="fav-icon-filled" /> : <FaRegHeart className="fav-icon-empty" />}
+                  </div>
+                  <div className="view-product-container" onClick={() => handleViewProduct(product)}>
+                    <AiFillEye className="view-icon" />
+                  </div>
                 </div>
                 <img src={product.image} alt={product.name} className="product-image" />
                 <div className="product-details-container">

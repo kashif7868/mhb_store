@@ -3,16 +3,22 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import About from "./pages/About";   // New page import
-import Contact from "./pages/Contact"; // New page import
-import FAQ from "./pages/FAQ"; // New page import
-import SignIn from "./components/user/SignIn";  // SignIn component import
-import SignUp from "./components/user/SignUp";  // SignUp component import
+import SignIn from "./components/user/SignIn";
+import SignUp from "./components/user/SignUp";
 import Preloader from "./components/Preloader";
-import useNavigationLoader from "./hooks/useNavigationLoader"; // Hook to manage loading
+import useNavigationLoader from "./hooks/useNavigationLoader";
+
+// Category pages
+import WomenClothing from "./pages/Clothing/WomenClothing";
+import MenClothing from "./pages/Clothing/MenClothing";
+import KidsClothing from "./pages/Clothing/KidsClothing";
+import DryFruit from "./pages/Food/DryFruit";
+import DesiGhee from "./pages/Food/DesiGhee";
+import Honey from "./pages/Food/Honey";
+// Add more category pages as needed
 
 const AppContent = () => {
-  const loading = useNavigationLoader(); // Manage page navigation loading
+  const loading = useNavigationLoader();
 
   return (
     <>
@@ -25,9 +31,18 @@ const AppContent = () => {
             <Route path="/" element={<Home />} />
             <Route path="/sign_in" element={<SignIn />} />
             <Route path="/sign_up" element={<SignUp />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<FAQ />} />
+
+            {/* Clothing Subcategories */}
+            <Route path="/clothing/women" element={<WomenClothing />} />
+            <Route path="/clothing/men" element={<MenClothing />} />
+            <Route path="/clothing/kids" element={<KidsClothing />} />
+
+            {/* Food Subcategories */}
+            <Route path="/food/dry-fruit" element={<DryFruit />} />
+            <Route path="/food/desi-ghee" element={<DesiGhee />} />
+            <Route path="/food/honey" element={<Honey />} />
+
+            {/* Add routes for Beauty, Gadgets, and Kids Toys similarly */}
           </Routes>
           <Footer />
         </>
