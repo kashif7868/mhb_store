@@ -1,5 +1,4 @@
-// reducers.js
-import { ADD_TO_CART, REMOVE_FROM_CART, INCREMENT_QTY, DECREMENT_QTY } from '../actions/actionsCart';
+import { ADD_TO_CART, REMOVE_FROM_CART, INCREMENT_QTY, DECREMENT_QTY, CLEAR_CART } from '../actions/actionsCart';
 
 const initialState = {
   cart: [],
@@ -22,11 +21,13 @@ const cartReducer = (state = initialState, action) => {
           cart: [...state.cart, { ...action.payload, qty: 1 }],
         };
       }
+
     case REMOVE_FROM_CART:
       return {
         ...state,
         cart: state.cart.filter((item) => item.id !== action.payload.id),
       };
+
     case INCREMENT_QTY:
       return {
         ...state,
@@ -34,6 +35,7 @@ const cartReducer = (state = initialState, action) => {
           item.id === action.payload.id ? { ...item, qty: item.qty + 1 } : item
         ),
       };
+
     case DECREMENT_QTY:
       return {
         ...state,
@@ -43,6 +45,13 @@ const cartReducer = (state = initialState, action) => {
             : item
         ),
       };
+
+    case CLEAR_CART:
+      return {
+        ...state,
+        cart: [],
+      };
+
     default:
       return state;
   }

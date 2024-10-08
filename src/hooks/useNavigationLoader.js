@@ -10,6 +10,18 @@ const useNavigationLoader = () => {
       "/",
       "/sign_in",
       "/sign_up",
+      "/shop",
+      "/cart",
+      // Pages 
+      // Clothes Subcategories
+      "/clothing/women",
+      "/clothing/men",
+      "/clothing/kids",
+      // Food Subcategories
+      "/food/dry-fruit",
+      "/food/desi-ghee",
+      "/food/honey",
+
     ];
 
     if (routesWithLoader.includes(location.pathname)) {

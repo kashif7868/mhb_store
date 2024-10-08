@@ -15,6 +15,8 @@ import KidsClothing from "./pages/Clothing/KidsClothing";
 import DryFruit from "./pages/Food/DryFruit";
 import DesiGhee from "./pages/Food/DesiGhee";
 import Honey from "./pages/Food/Honey";
+import CartPage from "./pages/Cart";
+import MobilePage from "./pages/Gadgets/Mobile";
 
 const AppContent = () => {
   const loading = useNavigationLoader();
@@ -31,6 +33,7 @@ const AppContent = () => {
             <Route path="/sign_in" element={<SignIn />} />
             <Route path="/sign_up" element={<SignUp />} />
             <Route path="/shop" element={<ShopPage />} />
+            <Route path="/cart" element={<CartPage />} />
 
             {/* Clothing Subcategories */}
             <Route path="/clothing/women" element={<WomenClothing />} />
@@ -42,8 +45,8 @@ const AppContent = () => {
             <Route path="/food/desi-ghee" element={<DesiGhee />} />
             <Route path="/food/honey" element={<Honey />} />
 
-           {/* Food Subcategories */}
-           
+            {/* Gadgets Subcategories */}
+            <Route path="/gedgets/mobile" element={<MobilePage />} />
           </Routes>
           <Footer />
         </>

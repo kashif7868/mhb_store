@@ -6,6 +6,10 @@ import { GiShoppingCart } from "react-icons/gi";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../assets/css/home.css';
+import { useDispatch } from 'react-redux';  // Import useSelector and useDispatch
+import { addToCart } from "../app/actions/actionsCart";  // Import addToCart action
+import { ToastContainer, toast } from 'react-toastify';  // Import Toastify
+import 'react-toastify/dist/ReactToastify.css';  // Import Toastify CSS
 import cl1Image from '../assets/images/slider-images/cl-1.jpg';
 import cl2Image from '../assets/images/slider-images/cl-2.jpg';
 import cl3Image from '../assets/images/slider-images/cl-3.jpeg';
@@ -15,6 +19,8 @@ const Home = () => {
   const [filteredCategory, setFilteredCategory] = useState('All');
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null); // State for selected product (for popup)
+  
+  const dispatch = useDispatch();  // Initialize useDispatch for Redux
 
   const sliderSettings = {
     dots: true,
@@ -57,6 +63,11 @@ const Home = () => {
   const favoriteProductsList = productData.filter(product => favoriteProducts.includes(product.id));
 
   const convertToPKR = (priceInUSD) => priceInUSD * 300;
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));  // Dispatch action to add to cart
+    toast.success(`${product.name} added to cart!`, { autoClose: 2000 });  // Show success toast
+  };
 
   return (
     <>
@@ -110,11 +121,19 @@ const Home = () => {
               <p className="discount-tag">50% Off</p>
               <p>Price: <s>PKR {convertToPKR(product.price)}</s></p>
               <p>Discounted Price: <strong>PKR {convertToPKR(product.price / 2)}</strong></p>
-              <button className="add-to-cart-button"><GiShoppingCart className="cart-icon" /> Add to Cart</button>
+              <button
+                className="add-to-cart-button"
+                onClick={() => handleAddToCart(product)}  // Add to cart and show toast
+              >
+                <GiShoppingCart className="cart-icon" /> Add to Cart
+              </button>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Toastify container */}
+      <ToastContainer />
 
       {/* Favorite Products Section */}
       {favoriteProductsList.length > 0 && (
@@ -139,7 +158,12 @@ const Home = () => {
                   <p>Price: <s>PKR {convertToPKR(product.price)}</s></p>
                   <p>Discounted Price: <strong>PKR {convertToPKR(product.price / 2)}</strong></p>
                 </div>
-                <button className="add-to-cart-button"> <GiShoppingCart className='cart-icon' />  Add to Cart</button>
+                <button
+                  className="add-to-cart-button"
+                  onClick={() => handleAddToCart(product)}  // Add to cart and show toast
+                >
+                  <GiShoppingCart className='cart-icon' /> Add to Cart
+                </button>
               </div>
             ))}
           </div>
@@ -157,8 +181,11 @@ const Home = () => {
             <p className="discount-tag">50% Off</p>
             <p>Price: <s>PKR {convertToPKR(selectedProduct.price)}</s></p>
             <p>Discounted Price: <strong>PKR {convertToPKR(selectedProduct.price / 2)}</strong></p>
-            <button className="add-to-cart-button">
-              <GiShoppingCart className='cart-icon' /> Add to Cart
+            <button
+              className="add-to-cart-button"
+              onClick={() => handleAddToCart(selectedProduct)}  // Add to cart and show toast
+            >
+              <GiShoppingCart className="cart-icon" /> Add to Cart
             </button>
           </div>
         </div>
