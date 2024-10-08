@@ -1,126 +1,184 @@
-/* General styling for the page layout */
-.signup-page-container {
-  display: flex;
+/* Full-page background with image */
+.signup-background {
   height: 100vh;
-  background-color: #f4f4f4;
-}
-
-/* Left side with background image */
-.signup-image-container {
-  flex: 1;
-  background-image: url('../../assets/images/slider-images/signin-Image.jpeg'); /* Add your signup background image */
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.8); /* Darkens the background for better readability */
-}
-
-/* Right side with the sign-up form */
-.signup-form-container {
-  flex: 1;
+  background: url('../../assets/images/slider-images/signup-Image.jpeg') no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff;
+  position: relative;
+}
+
+/* Overlay to darken the background */
+.signup-overlay {
+  background: rgba(0, 0, 0, 0.6);
   padding: 40px;
-}
-
-/* Sign-up card styling */
-.signup-card {
   width: 100%;
-  max-width: 400px;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 450px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Card for the sign-up form */
+.signup-card {
+  background: rgba(255, 255, 255, 0.9); 
+  padding: 40px;
+  border-radius: 15px;
   text-align: center;
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.signup-card:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Logo */
+/* Logo styling */
 .signup-logo {
-  width: 120px;
-  margin-bottom: 25px;
+  width: 100px;
+  margin-bottom: 20px;
 }
 
-/* Input fields styling */
+/* Title styling */
+.signup-title {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Form inputs */
+.signup-form {
+  width: 100%;
+}
+
 .signup-input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
   border: 1px solid #ddd;
+  border-radius: 8px;
   font-size: 16px;
-  outline: none;
+  background-color: #fafafa;
   transition: border-color 0.3s;
 }
 
 .signup-input:focus {
   border-color: #007bff;
+  outline: none;
 }
 
-/* Sign-up button */
-.signup-button {
+/* Submit button */
+.signup-btn {
   width: 100%;
-  padding: 12px;
+  padding: 14px 0;
   background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   font-size: 18px;
+  color: white;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.signup-button:hover {
+.signup-btn:hover {
   background-color: #0056b3;
 }
 
-/* Links */
+/* Links section */
 .signup-links {
   margin: 20px 0;
+  display: flex;
+  justify-content: center;
 }
 
 .signin-link {
   color: #007bff;
   text-decoration: none;
   font-size: 14px;
-  margin: 0 10px;
 }
 
 .signin-link:hover {
-  text-decoration: underline;
+  color: #0056b3;
 }
 
-/* Social sign-up section */
+/* Divider between form and social login */
+.signup-divider {
+  margin: 20px 0;
+  text-align: center;
+  position: relative;
+}
+
+.signup-divider span {
+  background-color: white;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.signup-divider::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  height: 1px;
+  background-color: #ddd;
+  z-index: -1;
+}
+
+/* Social buttons */
 .signup-social {
-  margin-top: 30px;
-}
-
-.social-icons {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.facebook-btn {
+  background-color: #3b5998;
+  color: white;
+}
+
+.facebook-btn:hover {
+  background-color: #2d4373;
+}
+
+.google-btn {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.google-btn:hover {
+  border-color: #bbb;
 }
 
 .social-icon {
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  transition: transform 0.3s;
+  margin-right: 10px;
+  font-size: 20px;
 }
 
-.social-icon:hover {
-  transform: scale(1.1);
-}
+/* Responsive design */
+@media (max-width: 768px) {
+  .signup-background {
+    padding: 20px;
+  }
 
-.facebook-icon {
-  color: #1877f2;
-}
+  .signup-overlay {
+    padding: 20px;
+  }
 
-.google-icon {
-  font-size: 50px;
+  .signup-card {
+    padding: 30px;
+  }
+
+  .signup-logo {
+    width: 80px;
+  }
 }

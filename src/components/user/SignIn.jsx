@@ -2,35 +2,35 @@ import React from 'react';
 import '../../assets/css/sign_in.css';
 import { Link } from 'react-router-dom';
 import mhbLogo from "../../assets/images/logo.png";
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 const SignIn = () => {
   return (
-    <div className="signin-page-container">
-      {/* Left side with sign-in background */}
-      <div className="signin-image-container"></div>
-
-      {/* Right side with sign-in form */}
-      <div className="signin-form-container">
+    <div className="signin-background">
+      <div className="signin-overlay">
         <div className="signin-card">
-          <img src={mhbLogo} alt="MHB Store Logo" className="signin-logo" /> {/* Logo */}
-          <h1>SIGN IN</h1>
-          <form>
+          <img src={mhbLogo} alt="MHB Store Logo" className="signin-logo" />
+          <h1 className="signin-title">Sign In</h1>
+          <form className="signin-form">
             <input type="text" placeholder="Username or Email" className="signin-input" />
             <input type="password" placeholder="Password" className="signin-input" />
-            <button type="submit" className="signin-button">Sign In</button>
+            <button type="submit" className="signin-btn">Sign In</button>
           </form>
           <div className="signin-links">
-            <Link to="/sign_up" className="signup-link">Sign Up</Link>
-            <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
+            <Link to="/sign_up" className="signin-link">Sign Up</Link>
+            <Link to="/forgot-password" className="signin-link">Forgot Password?</Link>
+          </div>
+          <div className="signin-divider">
+            <span>or</span>
           </div>
           <div className="signin-social">
-            <p>Or sign in with</p>
-            <div className="social-icons">
-              <FaFacebook className="social-icon facebook-icon" />
-              <FcGoogle className="social-icon google-icon" />
-            </div>
+            <button className="social-btn facebook-btn">
+              <FaFacebookF className="social-icon" /> Facebook
+            </button>
+            <button className="social-btn google-btn">
+              <FcGoogle className="social-icon" /> Google
+            </button>
           </div>
         </div>
       </div>
