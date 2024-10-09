@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
-import '../assets/css/navbar.css';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import mhbLogo from "../assets/images/logo.png";
 import { IoIosSearch } from "react-icons/io";
 import { GiShoppingCart } from "react-icons/gi";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
+import '../assets/css/navbar.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+
+  // Ensure cart is an array and fallback to an empty array if undefined
+  const cart = useSelector((state) => state.cart?.cart || []);
+  
+  // Calculate cart total count
+  const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -87,7 +94,10 @@ const Navbar = () => {
             <IoIosSearch className="search-icon" />
           </div>
           <Link to="/shop"><MdOutlineShoppingBag className="icon" /></Link>
-          <Link to="/cart"><GiShoppingCart className="icon" /></Link>
+          <Link to="/cart">
+            <GiShoppingCart className="icon" />
+            <span className="cart-badge">{cartCount}</span> {/* Safely show cart count */}
+          </Link>
           <div className="sign-in-container">
             <Link to="/sign_in" className='signIn-btn'>Sign In</Link>
           </div>
