@@ -1,18 +1,18 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux'; // For accessing and dispatching cart actions
+import { useDispatch, useSelector } from 'react-redux'; 
 import {
   incrementQty,
   decrementQty,
   removeFromCart,
   clearCart,
   addToCart
-} from '../app/actions/actionsCart'; // Import cart actions from Redux
-import { CiCircleRemove } from "react-icons/ci"; // Importing the remove icon
-import '../assets/css/cart.css'; // Assuming you have a cart.css file for styling
-import productData from '../data/product'; // Assuming product data is available for featured products
+} from '../app/actions/actionsCart';
+import { CiCircleRemove } from "react-icons/ci"; 
+import '../assets/css/cart.css'; 
+import productData from '../data/product'; 
 
 const Cart = () => {
-  const cart = useSelector((state) => state.cart.cart); // Access cart from Redux state
+  const cart = useSelector((state) => state.cart.cart); 
   const dispatch = useDispatch();
 
   // Handle quantity change

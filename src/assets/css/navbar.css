@@ -50,42 +50,53 @@
 .nav-links a:hover {
   color: #ffa500;
 }
+/* Dropdown Icon Rotation */
+.dropdown-icon {
+  transition: transform 0.3s ease;
+}
 
-/* Dropdown Styling */
+.rotated {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Content */
 .dropdown-content {
   position: absolute;
-  background-color: #f8f8f8;
+  background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: none;
   padding: 10px;
+  top: 40px;
   z-index: 1;
-  top: 30px;
+  width: 200px;
 }
 
 .show {
   display: block;
 }
 
+/* Hover Effect on Dropdown */
 .dropdown:hover .dropdown-content,
 .dropdown .show {
   display: block;
 }
 
+/* Dropdown Links */
 .dropdown-content a {
   color: #333;
-  padding: 5px 10px;
+  padding: 10px;
+  text-decoration: none;
   display: block;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-content a:hover {
   background-color: #ffa500;
-  color: #fff;
+  color: white;
 }
 
-.active-category {
-  color: #ffa500;
-}
+/* Rest of the CSS remains the same */
+
 
 /* Search Bar and Icons */
 .navbar-icons {
@@ -237,5 +248,45 @@
 
   .navbar-icons {
     gap: 10px;
+  }
+}
+/* Mobile Styles for Vertical Dropdown */
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    overflow: hidden;
+    transition: height 0.3s ease;
+  }
+
+  .nav-links.active {
+    height: auto; /* Allow for expanding to fit content */
+  }
+
+  /* Vertical Dropdown Content */
+  .dropdown-content {
+    position: static; /* Make dropdown content stack vertically */
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    top: auto;
+  }
+
+  .dropdown-content a {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hamburger {
+    display: block;
+    cursor: pointer;
   }
 }

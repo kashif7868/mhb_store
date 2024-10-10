@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';  // Import Toastify CSS
 import cl1Image from '../assets/images/slider-images/cl-1.jpg';
 import cl2Image from '../assets/images/slider-images/cl-2.jpg';
 import cl3Image from '../assets/images/slider-images/cl-3.jpeg';
+import cl4Image from '../assets/images/slider-images/cl-4.jpg';
+import cl5Image from '../assets/images/slider-images/cl-5.jpg';
 import productData from '../data/product'; // Import product data
 
 const Home = () => {
@@ -34,7 +36,7 @@ const Home = () => {
     arrows: true,
   };
 
-  const images = [cl1Image, cl2Image, cl3Image];
+  const images = [cl1Image, cl2Image, cl3Image,cl4Image,cl5Image];
 
   const handleCategoryClick = (category) => {
     setFilteredCategory(category);
