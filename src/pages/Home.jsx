@@ -6,23 +6,25 @@ import { GiShoppingCart } from "react-icons/gi";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../assets/css/home.css';
-import { useDispatch } from 'react-redux';  // Import useSelector and useDispatch
-import { addToCart } from "../app/actions/actionsCart";  // Import addToCart action
-import { ToastContainer, toast } from 'react-toastify';  // Import Toastify
-import 'react-toastify/dist/ReactToastify.css';  // Import Toastify CSS
+import { useDispatch } from 'react-redux';
+import { addToCart } from "../app/actions/actionsCart";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import cl1Image from '../assets/images/slider-images/cl-1.jpg';
 import cl2Image from '../assets/images/slider-images/cl-2.jpg';
 import cl3Image from '../assets/images/slider-images/cl-3.jpeg';
 import cl4Image from '../assets/images/slider-images/cl-4.jpg';
 import cl5Image from '../assets/images/slider-images/cl-5.jpg';
-import productData from '../data/product'; // Import product data
+import productData from '../data/product';
 
 const Home = () => {
   const [filteredCategory, setFilteredCategory] = useState('All');
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); // State for selected product (for popup)
-  
-  const dispatch = useDispatch();  // Initialize useDispatch for Redux
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(6); // Products per page
+
+  const dispatch = useDispatch();
 
   const sliderSettings = {
     dots: true,
@@ -36,10 +38,11 @@ const Home = () => {
     arrows: true,
   };
 
-  const images = [cl1Image, cl2Image, cl3Image,cl4Image,cl5Image];
+  const images = [cl1Image, cl2Image, cl3Image, cl4Image, cl5Image];
 
   const handleCategoryClick = (category) => {
     setFilteredCategory(category);
+    setCurrentPage(1); // Reset to the first page when category is changed
   };
 
   const toggleFavorite = (productId) => {
@@ -51,11 +54,11 @@ const Home = () => {
   };
 
   const handleViewProduct = (product) => {
-    setSelectedProduct(product); // Set the selected product for popup
+    setSelectedProduct(product);
   };
 
   const closePopup = () => {
-    setSelectedProduct(null); // Clear the selected product (close popup)
+    setSelectedProduct(null);
   };
 
   const filteredProducts = filteredCategory === 'All'
@@ -67,8 +70,19 @@ const Home = () => {
   const convertToPKR = (priceInUSD) => priceInUSD * 300;
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product));  // Dispatch action to add to cart
-    toast.success(`${product.name} added to cart!`, { autoClose: 2000 });  // Show success toast
+    dispatch(addToCart(product));
+    toast.success(`${product.name} added to cart!`, { autoClose: 2000 });
+  };
+
+  // Pagination Logic
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -107,7 +121,7 @@ const Home = () => {
 
         {/* Product Grid */}
         <div className="product-grid-container">
-          {filteredProducts.map((product) => (
+          {currentProducts.map((product) => (
             <div key={product.id} className="product-card">
               <div className="product-fav-view-container">
                 <div className="favorite-icon" onClick={() => toggleFavorite(product.id)}>
@@ -125,18 +139,44 @@ const Home = () => {
               <p>Discounted Price: <strong>PKR {convertToPKR(product.price / 2)}</strong></p>
               <button
                 className="add-to-cart-button"
-                onClick={() => handleAddToCart(product)}  // Add to cart and show toast
+                onClick={() => handleAddToCart(product)}
               >
                 <GiShoppingCart className="cart-icon" /> Add to Cart
               </button>
             </div>
           ))}
         </div>
+
+        {/* Pagination */}
+        <div className="pagination-container">
+          <button
+            className="pagination-button"
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            &lt;
+          </button>
+          {[...Array(totalPages).keys()].map((number) => (
+            <button
+              key={number}
+              onClick={() => paginate(number + 1)}
+              className={currentPage === number + 1 ? 'active' : ''}
+            >
+              {number + 1}
+            </button>
+          ))}
+          <button
+            className="pagination-button"
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            &gt;
+          </button>
+        </div>
       </div>
 
       {/* Toastify container */}
       <ToastContainer />
-
       {/* Favorite Products Section */}
       {favoriteProductsList.length > 0 && (
         <div className="favorite-products-section">
@@ -171,7 +211,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
       {/* Popup for viewing product details */}
       {selectedProduct && (
         <div className="popup-overlay" onClick={closePopup}>
@@ -185,7 +224,7 @@ const Home = () => {
             <p>Discounted Price: <strong>PKR {convertToPKR(selectedProduct.price / 2)}</strong></p>
             <button
               className="add-to-cart-button"
-              onClick={() => handleAddToCart(selectedProduct)}  // Add to cart and show toast
+              onClick={() => handleAddToCart(selectedProduct)}
             >
               <GiShoppingCart className="cart-icon" /> Add to Cart
             </button>
