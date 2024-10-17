@@ -1,61 +1,86 @@
 import React, { useState } from 'react';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import '../../assets/css/womenClothing.css';
+import { useDispatch } from 'react-redux';
+import { addToCart } from "../../app/actions/actionsCart";
+import productData from '../../data/product';
+import { GiShoppingCart } from "react-icons/gi";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { AiFillEye, AiFillCloseCircle } from "react-icons/ai";
+import { ToastContainer, toast } from 'react-toastify';
+import { IoFilterSharp } from "react-icons/io5";
+import 'react-toastify/dist/ReactToastify.css';
+import { motion } from 'framer-motion';
 
 const WomenClothing = () => {
   const [filterVisible, setFilterVisible] = useState(false);
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(6);
+  const dispatch = useDispatch();
 
-  const toggleFilter = () => {
-    setFilterVisible(!filterVisible);
+  const toggleFilter = () => setFilterVisible(!filterVisible);
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    toast.success(`${product.name} added to cart!`);
   };
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    fade: true,
-    arrows: true
+  const toggleFavorite = (productId) => {
+    setFavoriteProducts((prevFavorites) =>
+      prevFavorites.includes(productId)
+        ? prevFavorites.filter((id) => id !== productId)
+        : [...prevFavorites, productId]
+    );
+  };
+
+  const handleViewProduct = (product) => setSelectedProduct(product);
+
+  const closePopup = () => setSelectedProduct(null);
+
+  const convertToPKR = (price) => price.toLocaleString('en-PK', {
+    style: 'currency',
+    currency: 'PKR'
+  });
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = productData.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(productData.length / productsPerPage);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
     <>
-      <div className="women-clothes-discount-container">
-        <Slider {...sliderSettings}>
-          <div>
-            <img
-              src="https://www.gulahmedshop.com/media/wysiwyg/discount-banner-1.jpg"
-              alt="Discount 1"
-              className="slider-image"
-            />
-          </div>
-          <div>
-            <img
-              src="https://www.gulahmedshop.com/media/wysiwyg/discount-banner-2.jpg"
-              alt="Discount 2"
-              className="slider-image"
-            />
-          </div>
-        </Slider>
+      <div className="w-clothes-banner-container">
+        <div className="clothes-banner">
+          <motion.h2
+            initial={{ x: "-100vw" }}
+            animate={{ x: 0 }}
+            transition={{ type: "spring", stiffness: 50, damping: 10 }}
+          >
+            #CLOTHES
+          </motion.h2>
+        </div>
       </div>
-
-      <div className="women-clothing-container">
+      <div className="women-clothing-container side-bar">
         <div className="top-sub-category-icons">
-          {/* Same category icons */}
+          <ul className="sub-category-list">
+            <li>Cotton</li>
+            <li>Cotton Blends</li>
+            <li>Linen</li>
+            <li>Lawn</li>
+            <li>Khaddar</li>
+            <li>Karandi</li>
+            <li>Wash & Wear</li>
+            <li>Boski</li>
+          </ul>
+          <div className="filter-toggle-icon" onClick={toggleFilter}>
+            <IoFilterSharp />
+          </div>
         </div>
-
-        {/* Filter Icon */}
-        <div className="filter-toggle-icon" onClick={toggleFilter}>
-          <i className="fas fa-filter"></i> {/* FontAwesome filter icon */}
-          <span>Filters</span>
-        </div>
-
-        {/* Filter Section */}
         {filterVisible && (
           <div className="women-filter-sub-navbar-container">
             <div className="filter-section">
@@ -80,7 +105,6 @@ const WomenClothing = () => {
             <div className="filter-section">
               <h4>Ready To Wear Type</h4>
               <ul>
-                <li>1 Piece</li>
                 <li>2 Piece</li>
                 <li>3 Piece</li>
               </ul>
@@ -102,34 +126,91 @@ const WomenClothing = () => {
             <div className="filter-section">
               <h4>Product Type</h4>
               <ul>
-                <li>1PC</li>
                 <li>2PC</li>
                 <li>3PC</li>
-              </ul>
-            </div>
-
-            <div className="filter-section">
-              <h4>Color</h4>
-              <ul>
-                <li>Shirt Fabric</li>
-                <li>Dupatta Fabric</li>
-                <li>Trouser Fabric</li>
-              </ul>
-            </div>
-
-            <div className="filter-section">
-              <h4>Women Size</h4>
-              <ul>
-                <li>XS</li>
-                <li>S</li>
-                <li>M</li>
-                <li>L</li>
-                <li>XL</li>
               </ul>
             </div>
           </div>
         )}
       </div>
+
+
+      <div className="product-grid-container">
+        {currentProducts.map((product) => (
+          <div key={product.id} className="product-card">
+            <div className="product-fav-view-container">
+              <div className="favorite-icon" onClick={() => toggleFavorite(product.id)}>
+                {favoriteProducts.includes(product.id)
+                  ? <FaHeart className="fav-icon-filled" />
+                  : <FaRegHeart className="fav-icon-empty" />}
+              </div>
+              <div className="view-product-container" onClick={() => handleViewProduct(product)}>
+                <AiFillEye className="view-icon" />
+              </div>
+            </div>
+            <img src={product.image} alt={product.name} className="product-image" />
+            <h3>{product.name}</h3>
+            <p>{product.description}</p>
+            <p className="discount-tag">30% Off</p>
+            <p>Price: <s>{convertToPKR(product.price)}</s></p>
+            <p>Discounted Price: <strong>{convertToPKR(product.price * 0.7)}</strong></p>
+            <button
+              className="add-to-cart-button"
+              onClick={() => handleAddToCart(product)}
+            >
+              <GiShoppingCart className="cart-icon" /> Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="pagination-container">
+        <button
+          className="pagination-button"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          &lt;
+        </button>
+        {[...Array(totalPages).keys()].map((number) => (
+          <button
+            key={number}
+            onClick={() => paginate(number + 1)}
+            className={currentPage === number + 1 ? 'active' : ''}
+          >
+            {number + 1}
+          </button>
+        ))}
+        <button
+          className="pagination-button"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          &gt;
+        </button>
+      </div>
+
+      <ToastContainer />
+
+      {selectedProduct && (
+        <div className="popup-overlay" onClick={closePopup}>
+          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+            <AiFillCloseCircle className="close-icon" onClick={closePopup} />
+            <img src={selectedProduct.image} alt={selectedProduct.name} className="popup-product-image" />
+            <h2>{selectedProduct.name}</h2>
+            <p>{selectedProduct.description}</p>
+            <p className="discount-tag">30% Off</p>
+            <p>Price: <s>{convertToPKR(selectedProduct.price)}</s></p>
+            <p>Discounted Price: <strong>{convertToPKR(selectedProduct.price * 0.7)}</strong></p>
+            <button
+              className="add-to-cart-button"
+              onClick={() => handleAddToCart(selectedProduct)}
+            >
+              <GiShoppingCart className="cart-icon" /> Add to Cart
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

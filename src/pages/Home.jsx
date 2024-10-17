@@ -94,8 +94,11 @@ const Home = () => {
               <img src={image} alt={`Slide ${index}`} className="slide-image" />
               <div className="slide-overlay">
                 <div className="slide-text">
-                  <h2>Welcome to MHB Store</h2>
-                  <p>Find the best products at unbeatable prices!</p>
+                  <h2>Up to 30% Off on Summer Collection</h2>
+                  <p>Explore our wide range of summer wear at unbeatable prices!</p>
+                  <span>
+                    <a href="/shop" className="shop-now-link">Shop Now</a>
+                  </span>
                 </div>
               </div>
             </div>

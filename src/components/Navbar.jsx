@@ -6,7 +6,10 @@ import { IoIosSearch } from "react-icons/io";
 import { GiShoppingCart } from "react-icons/gi";
 import { FaBars, FaTimes, FaTimes as CloseIcon } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { FaAngleRight } from "react-icons/fa6";
+import { FaAngleLeft } from "react-icons/fa6";
 import '../assets/css/navbar.css';
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +34,22 @@ const Navbar = () => {
     }
   };
   const handleSearchReset = () => setSearchQuery('');
+  // Add these functions to the Navbar component
+// JavaScript part remains the same but ensure smooth scrolling
+const scrollLeft = () => {
+  document.querySelector('.nav-links').scrollBy({
+    left: -200, // Adjust the scroll distance as needed
+    behavior: 'smooth',
+  });
+};
+
+const scrollRight = () => {
+  document.querySelector('.nav-links').scrollBy({
+    left: 200, // Adjust the scroll distance as needed
+    behavior: 'smooth',
+  });
+};
+
 
   return (
     <>
@@ -78,14 +97,15 @@ const Navbar = () => {
         <div className="hamburger" onClick={toggleMenu}>
           {isOpen ? <FaTimes /> : <FaBars />}
         </div>
+        <FaAngleLeft className="nav-arrow left-arrow" onClick={scrollLeft} />
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
           <li><Link to="/">Latest</Link></li>
 
           <li className="dropdown" onClick={() => handleDropdown('clothing')}>
             <span>Clothing <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'clothing' ? 'rotated' : ''}`} /></span>
             <div className={`dropdown-content ${activeDropdown === 'clothing' ? 'show' : ''}`}>
-              <Link to="/clothing/men">Men</Link>
               <Link to="/clothing/women">Women</Link>
+              <Link to="/clothing/men">Men</Link>
             </div>
           </li>
 
@@ -125,9 +145,10 @@ const Navbar = () => {
           <li><Link to="/jewelry">Jewelry</Link></li>
           <li><Link to="/watches-glasses">Watches</Link></li>
           <li><Link to="/watches-glasses"> Glasses</Link></li>
-          {/* <li><Link to="/gem-stones">Gem Stones</Link></li>
-          <li><Link to="/hair-loss-products">Hair Loss Products</Link></li> */}
+          <li><Link to="/gem-stones">Gem Stones</Link></li>
+          <li><Link to="/hair-loss-products">Hair Loss Products</Link></li>
         </ul>
+        <FaAngleRight className="nav-arrow right-arrow" onClick={scrollRight} />
       </nav>
     </>
   );
