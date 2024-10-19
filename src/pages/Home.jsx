@@ -1,241 +1,125 @@
 import React, { useState } from 'react';
-import Slider from 'react-slick';
-import { AiFillEye, AiFillCloseCircle } from "react-icons/ai";
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { AiFillEye } from "react-icons/ai";
 import { GiShoppingCart } from "react-icons/gi";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import '../assets/css/home.css';
 import { useDispatch } from 'react-redux';
-import { addToCart } from "../app/actions/actionsCart";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import cl1Image from '../assets/images/slider-images/cl-1.jpg';
-import cl2Image from '../assets/images/slider-images/cl-2.jpg';
-import cl3Image from '../assets/images/slider-images/cl-3.jpeg';
-import cl4Image from '../assets/images/slider-images/cl-4.jpg';
-import cl5Image from '../assets/images/slider-images/cl-5.jpg';
+import { Modal } from 'react-bootstrap';
 import productData from '../data/product';
+import { addToCart } from '../app/actions/actionsCart';
+import '../assets/css/home.css';
 
 const Home = () => {
-  const [filteredCategory, setFilteredCategory] = useState('All');
-  const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(6); // Products per page
+    const dispatch = useDispatch();
+    const [showModal, setShowModal] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const dispatch = useDispatch();
+    const handleAddToCart = (item) => {
+        dispatch(addToCart(item));
+        toast.success(`${item.name} added to cart!`);
+    };
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    fade: true,
-    arrows: true,
-  };
+    const handleQuickView = (item) => {
+        setSelectedProduct(item);
+        setShowModal(true);
+    };
 
-  const images = [cl1Image, cl2Image, cl3Image, cl4Image, cl5Image];
-
-  const handleCategoryClick = (category) => {
-    setFilteredCategory(category);
-    setCurrentPage(1); // Reset to the first page when category is changed
-  };
-
-  const toggleFavorite = (productId) => {
-    if (favoriteProducts.includes(productId)) {
-      setFavoriteProducts(favoriteProducts.filter(id => id !== productId));
-    } else {
-      setFavoriteProducts([...favoriteProducts, productId]);
-    }
-  };
-
-  const handleViewProduct = (product) => {
-    setSelectedProduct(product);
-  };
-
-  const closePopup = () => {
-    setSelectedProduct(null);
-  };
-
-  const filteredProducts = filteredCategory === 'All'
-    ? productData
-    : productData.filter(product => product.category === filteredCategory.toLowerCase());
-
-  const favoriteProductsList = productData.filter(product => favoriteProducts.includes(product.id));
-
-  const convertToPKR = (priceInUSD) => priceInUSD * 300;
-
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    toast.success(`${product.name} added to cart!`, { autoClose: 2000 });
-  };
-
-  // Pagination Logic
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  return (
-    <>
-      <div className="home-slider-container">
-        <Slider {...sliderSettings}>
-          {images.map((image, index) => (
-            <div key={index} className="slide">
-              <img src={image} alt={`Slide ${index}`} className="slide-image" />
-              <div className="slide-overlay">
-                <div className="slide-text">
-                  <h2>Up to 30% Off on Summer Collection</h2>
-                  <p>Explore our wide range of summer wear at unbeatable prices!</p>
-                  <span>
-                    <a href="/shop" className="shop-now-link">Shop Now</a>
-                  </span>
+    return (
+        <div className="home-container">
+            {/* Banner Section */}
+            <section className="banner">
+                <div className="banner-content">
+                    <h1>Flat 30% Off</h1>
+                    <h2>MHB Store Collection</h2>
+                    <p>Best sale of the year!</p>
+                    <button className="shop-now">Shop Now</button>
                 </div>
-              </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
+                <img src={require('../assets/images/slider-images/cl-2.jpg')} alt="Banner" className="banner-img" />
+            </section>
 
-      {/* Sub-navbar for categories */}
-      <div className="main-container-product">
-        <div className="sub-navbar-container">
-          <ul className="subnavbar-list">
-            {['All', 'Trending', 'Clothes', 'Beauty', 'Food', 'Gadgets', 'Kids Toys'].map((category) => (
-              <li
-                key={category}
-                onClick={() => handleCategoryClick(category)}
-                className={filteredCategory === category ? 'active' : ''}
-              >
-                {category}
-              </li>
-            ))}
-          </ul>
-        </div>
+            {/* Explore Categories Section */}
+            <section className="explore-categories">
+                <div className="left-image">
+                    <img src={require('../assets/images/flogo.png')} alt="Explore Categories" className="explore-img" />
+                    <span className="sale-badge">50% Off</span>
+                </div>
+                <div className="right-categories">
+                    <h2>Explore Categories</h2>
+                    <div className="category-grid">
+                        <div className="category-item">
+                            <img src={require('../assets/images/products/clothe.webp')} alt="Clothing" />
+                            <p>Clothing</p>
+                            <span>49 items</span>
+                        </div>
+                        <div className="category-item">
+                            <img src={require('../assets/images/products/gadgets.webp')} alt="Gadgets" />
+                            <p>Gadgets</p>
+                            <span>485 items</span>
+                        </div>
+                        <div className="category-item">
+                            <img src={require('../assets/images/products/beauty.webp')} alt="Beauty" />
+                            <p>Beauty</p>
+                            <span>291 items</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        {/* Product Grid */}
-        <div className="product-grid-container">
-          {currentProducts.map((product) => (
-            <div key={product.id} className="product-card">
-              <div className="product-fav-view-container">
-                <div className="favorite-icon" onClick={() => toggleFavorite(product.id)}>
-                  {favoriteProducts.includes(product.id) ? <FaHeart className="fav-icon-filled" /> : <FaRegHeart className="fav-icon-empty" />}
+            {/* Product Listing Section */}
+            <section className="products">
+                <h2>Popular Products</h2>
+                <div className="product-grid">
+                    {productData.map((item, index) => (
+                        <div key={index} className="product-card">
+                            <span className="sale-badge">Sale</span>
+                            <img src={item.image} alt={item.name} className="product-img" />
+                            <h3>{item.name}</h3>
+                            <p>
+                                <span className="sale-price">${item.salePrice}</span>
+                                <span className="original-price">${item.originalPrice}</span>
+                            </p>
+                            <div className="product-actions">
+                                <button className="quick-add" onClick={() => handleAddToCart(item)}>
+                                    <GiShoppingCart /> Quick Add
+                                </button>
+                                <button className="quick-view" onClick={() => handleQuickView(item)}>
+                                    <AiFillEye /> Quick View
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-                <div className="view-product-container" onClick={() => handleViewProduct(product)}>
-                  <AiFillEye className="view-icon" />
-                </div>
-              </div>
-              <img src={product.image} alt={product.name} className="product-image" />
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <p className="discount-tag">50% Off</p>
-              <p>Price: <s>PKR {convertToPKR(product.price)}</s></p>
-              <p>Discounted Price: <strong>PKR {convertToPKR(product.price / 2)}</strong></p>
-              <button
-                className="add-to-cart-button"
-                onClick={() => handleAddToCart(product)}
-              >
-                <GiShoppingCart className="cart-icon" /> Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
+            </section>
 
-        {/* Pagination */}
-        <div className="pagination-container">
-          <button
-            className="pagination-button"
-            onClick={() => paginate(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            &lt;
-          </button>
-          {[...Array(totalPages).keys()].map((number) => (
-            <button
-              key={number}
-              onClick={() => paginate(number + 1)}
-              className={currentPage === number + 1 ? 'active' : ''}
-            >
-              {number + 1}
-            </button>
-          ))}
-          <button
-            className="pagination-button"
-            onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            &gt;
-          </button>
-        </div>
-      </div>
+            {/* Quick View Modal */}
+            {selectedProduct && (
+                <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{selectedProduct.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="quick-view-container">
+                            <img src={selectedProduct.image} alt={selectedProduct.name} className="quick-view-img" />
+                            <div className="quick-view-details">
+                                <p>Price: ${selectedProduct.salePrice}</p>
+                                <p>Availability: In Stock</p>
+                                <div className="quantity-section">
+                                    <label htmlFor="quantity">Quantity:</label>
+                                    <input type="number" id="quantity" name="quantity" defaultValue="1" min="1" />
+                                </div>
+                                <button className="add-to-cart-btn" onClick={() => handleAddToCart(selectedProduct)}>
+                                    Add To Cart
+                                </button>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+            )}
 
-      {/* Toastify container */}
-      <ToastContainer />
-      {/* Favorite Products Section */}
-      {favoriteProductsList.length > 0 && (
-        <div className="favorite-products-section">
-          <h2>Your Favorite Products</h2>
-          <div className="product-grid-container">
-            {favoriteProductsList.map((product) => (
-              <div key={product.id} className="product-card">
-                <div className="product-fav-view-container">
-                  <div className="favorite-icon" onClick={() => toggleFavorite(product.id)}>
-                    {favoriteProducts.includes(product.id) ? <FaHeart className="fav-icon-filled" /> : <FaRegHeart className="fav-icon-empty" />}
-                  </div>
-                  <div className="view-product-container" onClick={() => handleViewProduct(product)}>
-                    <AiFillEye className="view-icon" />
-                  </div>
-                </div>
-                <img src={product.image} alt={product.name} className="product-image" />
-                <div className="product-details-container">
-                  <h3>{product.name}</h3>
-                  <p>{product.description}</p>
-                  <p className="discount-tag">50% Off</p>
-                  <p>Price: <s>PKR {convertToPKR(product.price)}</s></p>
-                  <p>Discounted Price: <strong>PKR {convertToPKR(product.price / 2)}</strong></p>
-                </div>
-                <button
-                  className="add-to-cart-button"
-                  onClick={() => handleAddToCart(product)}  // Add to cart and show toast
-                >
-                  <GiShoppingCart className='cart-icon' /> Add to Cart
-                </button>
-              </div>
-            ))}
-          </div>
+            {/* Notification for adding to cart */}
+            <ToastContainer />
         </div>
-      )}
-      {/* Popup for viewing product details */}
-      {selectedProduct && (
-        <div className="popup-overlay" onClick={closePopup}>
-          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <AiFillCloseCircle className="close-icon" onClick={closePopup} />
-            <img src={selectedProduct.image} alt={selectedProduct.name} className="popup-product-image" />
-            <h2>{selectedProduct.name}</h2>
-            <p>{selectedProduct.description}</p>
-            <p className="discount-tag">50% Off</p>
-            <p>Price: <s>PKR {convertToPKR(selectedProduct.price)}</s></p>
-            <p>Discounted Price: <strong>PKR {convertToPKR(selectedProduct.price / 2)}</strong></p>
-            <button
-              className="add-to-cart-button"
-              onClick={() => handleAddToCart(selectedProduct)}
-            >
-              <GiShoppingCart className="cart-icon" /> Add to Cart
-            </button>
-          </div>
-        </div>
-      )}
-    </>
-  );
+    );
 };
 
 export default Home;

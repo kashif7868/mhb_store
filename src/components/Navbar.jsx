@@ -4,12 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import mhbLogo from "../assets/images/logo.png";
 import { IoIosSearch } from "react-icons/io";
 import { GiShoppingCart } from "react-icons/gi";
-import { FaBars, FaTimes, FaTimes as CloseIcon } from "react-icons/fa";
+import { MdOutlineFavorite } from "react-icons/md";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { FaAngleRight } from "react-icons/fa6";
-import { FaAngleLeft } from "react-icons/fa6";
 import '../assets/css/navbar.css';
-
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,22 +32,6 @@ const Navbar = () => {
     }
   };
   const handleSearchReset = () => setSearchQuery('');
-  // Add these functions to the Navbar component
-// JavaScript part remains the same but ensure smooth scrolling
-const scrollLeft = () => {
-  document.querySelector('.nav-links').scrollBy({
-    left: -200, // Adjust the scroll distance as needed
-    behavior: 'smooth',
-  });
-};
-
-const scrollRight = () => {
-  document.querySelector('.nav-links').scrollBy({
-    left: 200, // Adjust the scroll distance as needed
-    behavior: 'smooth',
-  });
-};
-
 
   return (
     <>
@@ -74,13 +56,19 @@ const scrollRight = () => {
             />
             {searchQuery && (
               <button type="button" className="close-btn" onClick={handleSearchReset}>
-                <CloseIcon />
+                <FaTimes />
               </button>
             )}
           </label>
         </form>
 
         <div className="right-icons">
+          <div className="fav-prodect-list-container">
+            <Link to="/favourit-list">
+              {cartCount > 0 && <span className="cart-badge-dot">{cartCount}</span>}
+              <MdOutlineFavorite  className="icon" />
+            </Link>
+          </div>
           <div className="cart-icon-wrapper">
             <Link to="/cart">
               <GiShoppingCart className="icon" />
@@ -97,10 +85,7 @@ const scrollRight = () => {
         <div className="hamburger" onClick={toggleMenu}>
           {isOpen ? <FaTimes /> : <FaBars />}
         </div>
-        <FaAngleLeft className="nav-arrow left-arrow" onClick={scrollLeft} />
         <ul className={`nav-links ${isOpen ? 'active' : ''}`}>
-          <li><Link to="/">Latest</Link></li>
-
           <li className="dropdown" onClick={() => handleDropdown('clothing')}>
             <span>Clothing <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'clothing' ? 'rotated' : ''}`} /></span>
             <div className={`dropdown-content ${activeDropdown === 'clothing' ? 'show' : ''}`}>
@@ -117,38 +102,38 @@ const scrollRight = () => {
               <Link to="/food/dried-fruits-nuts">Dried Fruits & Nuts</Link>
               <Link to="/food/sharbat">Sharbat</Link>
               <Link to="/food/achar-chatni">Achar & Chatni</Link>
+              <Link to="/food/edible-spices">Herbs & Spices</Link>
+              <Link to="/food/sweeteners">Sweeteners</Link>
+              <Link to="/food/supplements">Supplements</Link>
+              <Link to="/food/drinks">Drinks</Link>
             </div>
           </li>
 
-          <li className="dropdown" onClick={() => handleDropdown('oil-herbs')}>
-            <span>Oil  <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'oil-herbs' ? 'rotated' : ''}`} /></span>
-            <div className={`dropdown-content ${activeDropdown === 'oil-herbs' ? 'show' : ''}`}>
-              <Link to="/oil-herbs/essential-oils">Essential Oils</Link>
-              <Link to="/oil-herbs/herbs-spices">Herbs & Spices</Link>
+          <li className="dropdown" onClick={() => handleDropdown('cosmetics')}>
+            <span>Cosmetics <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'cosmetics' ? 'rotated' : ''}`} /></span>
+            <div className={`dropdown-content ${activeDropdown === 'cosmetics' ? 'show' : ''}`}>
+              <Link to="/cosmetics/beauty">Beauty</Link>
+              <Link to="/cosmetics/hair-care">Hair Care</Link>
+              <Link to="/cosmetics/body-care">Body Care</Link>
+              <Link to="/cosmetics/men-care">Men Care</Link>
+              <Link to="/cosmetics/perfumes">Perfumes</Link>
+              <Link to="/cosmetics/hair-loss-products">Hair Loss Products</Link>
             </div>
           </li>
 
-          <li className="dropdown" onClick={() => handleDropdown('sweetener-supplements')}>
-            <span>Sweetener <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'sweetener-supplements' ? 'rotated' : ''}`} /></span>
-            <div className={`dropdown-content ${activeDropdown === 'sweetener-supplements' ? 'show' : ''}`}>
-              <Link to="/sweetener/natural-sweeteners">Natural Sweeteners</Link>
+          <li className="dropdown" onClick={() => handleDropdown('fashion')}>
+            <span>Fashion <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'fashion' ? 'rotated' : ''}`} /></span>
+            <div className={`dropdown-content ${activeDropdown === 'fashion' ? 'show' : ''}`}>
+              <Link to="/fashion/jewelry">Jewelry</Link>
+              <Link to="/fashion/gem-stones">Gem Stones</Link>
+              <Link to="/fashion/watches-glasses">Watches & Glasses</Link>
             </div>
           </li>
-          <li><Link to="/supplements">Supplements</Link></li>
-          <li><Link to="/beauty">Beauty</Link></li>
-          <li><Link to="/drinks">Drinks</Link></li>
-          <li><Link to="/mobile-laptop">Mobile </Link></li>
-          <li><Link to="/mobile-laptop">Laptop</Link></li>
-          <li><Link to="/perfumes">Perfumes</Link></li>
-          <li><Link to="/supplements">Supplements</Link></li>
+
+          <li><Link to="/health-care">Health Care</Link></li>
+          <li><Link to="/tech-hub">Tech Hub</Link></li>
           <li><Link to="/toys-kids">Toys</Link></li>
-          <li><Link to="/jewelry">Jewelry</Link></li>
-          <li><Link to="/watches-glasses">Watches</Link></li>
-          <li><Link to="/watches-glasses"> Glasses</Link></li>
-          <li><Link to="/gem-stones">Gem Stones</Link></li>
-          <li><Link to="/hair-loss-products">Hair Loss Products</Link></li>
         </ul>
-        <FaAngleRight className="nav-arrow right-arrow" onClick={scrollRight} />
       </nav>
     </>
   );

@@ -1,71 +1,211 @@
-/* Footer Styling */
+/* General Styling */
 .footer {
-    background-color: #2c2f33;
-    color: #fff;
-    padding: 40px 20px;
-  }
-  
+  background-color: #f8f8f8;
+  color: #333;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+  margin-top: 40px;
+  border-top: 1px solid #999;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  gap: 20px; 
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px;
+  margin: 10px;
+}
+
+/* Footer Logo Styling */
+.footer-logo {
+  width: 150px;
+  aspect-ratio: 3/2;
+  object-fit: contain;
+  mix-blend-mode: darken;
+  margin-bottom: 15px;
+}
+
+.footer-section h3 {
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer-section h3::after {
+  content: "";
+  width: 50px;
+  height: 2px;
+  background-color: #f39c12;
+  display: block;
+  margin-top: 5px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  line-height: 2.5;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #666;
+  font-size: 16px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a::before {
+  content: "→ ";
+  color: #f39c12;
+  transition: transform 0.3s ease, color 0.3s ease;
+  position: absolute;
+  left: -20px;
+  opacity: 0;
+}
+
+.footer-section ul li a:hover {
+  color: #f39c12;
+  cursor: pointer;
+}
+
+.footer-section ul li a:hover::before {
+  transform: translateX(10px); 
+  opacity: 1;
+}
+
+.social-links a {
+  text-decoration: none;
+  font-size: 24px;
+  color: #666;
+  margin-right: 15px;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #f39c12;
+}
+
+/* Contact Section Styling */
+.footer-section.contact-section ul li {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.footer-section.contact-section ul li svg {
+  margin-right: 10px;
+  color: #f39c12;
+}
+
+.footer-section.contact-section ul li:hover svg {
+  color: #333;
+}
+
+/* Payment Options and App Store Links */
+.payment-options img {
+  width: 150px;
+  margin-top: 10px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.payment-options img:hover {
+  opacity: 1;
+}
+
+.app-store-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.store-badge {
+  width: 135px;
+  transition: transform 0.3s ease;
+}
+
+.store-badge:hover {
+  transform: scale(1.1);
+}
+
+/* Footer Bottom Section */
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.footer-bottom p {
+  color: #999;
+  margin: 0;
+}
+
+.footer-bottom .payment-options {
+  margin-top: 10px;
+}
+
+/* Responsive Layout Adjustments */
+@media (max-width: 1024px) {
   .footer-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    flex-wrap: wrap;
   }
-  
-  .footer-section h3 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #ffc800;
-  }
-  
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-section ul li {
-    margin-bottom: 10px;
-  }
-  
-  .footer-section ul li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .footer-section ul li a:hover {
-    color: #ffc800;
-  }
-  
-  .footer-section p {
-    margin-bottom: 10px;
-  }
-  
-  .footer-logo {
-    width: 150px;
+
+  .footer-section {
     margin-bottom: 20px;
   }
-  
-  /* Social Links */
-  .social-section ul {
-    display: flex;
-    gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  
-  .social-section ul li a {
+
+  .footer-section {
+    margin-bottom: 20px;
+    min-width: 100%;
+  }
+
+  .footer-section h3::after {
+    margin: 0 auto;
+  }
+
+  .social-links a {
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-section h3 {
     font-size: 18px;
-    text-decoration: none;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .footer-container {
-      grid-template-columns: 1fr 1fr;
-    }
+
+  .footer-section ul li a {
+    font-size: 14px;
   }
-  
-  @media (max-width: 480px) {
-    .footer-container {
-      grid-template-columns: 1fr;
-    }
+
+  .footer-section.contact-section ul li {
+    font-size: 14px;
   }
-  
+
+  .social-links a {
+    font-size: 20px;
+  }
+
+  .payment-options img {
+    width: 130px;
+  }
+
+  .store-badge {
+    width: 120px;
+  }
+}

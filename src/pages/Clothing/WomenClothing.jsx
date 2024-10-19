@@ -5,11 +5,11 @@ import { addToCart } from "../../app/actions/actionsCart";
 import productData from '../../data/product';
 import { GiShoppingCart } from "react-icons/gi";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { AiFillEye, AiFillCloseCircle } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
 import { IoFilterSharp } from "react-icons/io5";
 import 'react-toastify/dist/ReactToastify.css';
-import { motion } from 'framer-motion';
+import Modal from 'react-bootstrap/Modal'; 
 
 const WomenClothing = () => {
   const [filterVisible, setFilterVisible] = useState(false);
@@ -17,6 +17,7 @@ const WomenClothing = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6);
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
   const toggleFilter = () => setFilterVisible(!filterVisible);
@@ -34,14 +35,15 @@ const WomenClothing = () => {
     );
   };
 
-  const handleViewProduct = (product) => setSelectedProduct(product);
+  const handleViewProduct = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
 
-  const closePopup = () => setSelectedProduct(null);
-
-  const convertToPKR = (price) => price.toLocaleString('en-PK', {
-    style: 'currency',
-    currency: 'PKR'
-  });
+  const closePopup = () => {
+    setSelectedProduct(null);
+    setShowModal(false);
+  };
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -54,28 +56,73 @@ const WomenClothing = () => {
 
   return (
     <>
-      <div className="w-clothes-banner-container">
-        <div className="clothes-banner">
-          <motion.h2
-            initial={{ x: "-100vw" }}
-            animate={{ x: 0 }}
-            transition={{ type: "spring", stiffness: 50, damping: 10 }}
-          >
-            #CLOTHES
-          </motion.h2>
+      {/* Updated Banner Section */}
+      <section className="explore-categories">
+        <div className="left-image">
+          <img src={require('../../assets/images/flogo.png')} alt="Explore Categories" className="explore-img" />
+          <span className="sale-badge">50% Off</span>
         </div>
-      </div>
+        <div className="right-categories">
+          <h2>Explore Categories</h2>
+          <div className="category-grid">
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Cotton" />
+              <p>Cotton</p>
+              <span>49 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Lawn" />
+              <p>Lawn</p>
+              <span>35 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Cotton Silk" />
+              <p>Cotton Silk</p>
+              <span>22 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Silk" />
+              <p>Silk</p>
+              <span>28 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Organza" />
+              <p>Organza</p>
+              <span>18 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Velvet" />
+              <p>Velvet</p>
+              <span>14 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Khaddar" />
+              <p>Khaddar</p>
+              <span>32 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Satin" />
+              <p>Satin</p>
+              <span>21 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Cambric" />
+              <p>Cambric</p>
+              <span>16 items</span>
+            </div>
+            <div className="category-item">
+              <img src={require('../../assets/images/products/clothe.webp')} alt="Linen" />
+              <p>Linen</p>
+              <span>29 items</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div className="women-clothing-container side-bar">
         <div className="top-sub-category-icons">
           <ul className="sub-category-list">
-            <li>Cotton</li>
-            <li>Cotton Blends</li>
-            <li>Linen</li>
-            <li>Lawn</li>
-            <li>Khaddar</li>
-            <li>Karandi</li>
-            <li>Wash & Wear</li>
-            <li>Boski</li>
+            {/* Sub-categories */}
           </ul>
           <div className="filter-toggle-icon" onClick={toggleFilter}>
             <IoFilterSharp />
@@ -134,83 +181,74 @@ const WomenClothing = () => {
         )}
       </div>
 
-
-      <div className="product-grid-container">
-        {currentProducts.map((product) => (
-          <div key={product.id} className="product-card">
-            <div className="product-fav-view-container">
-              <div className="favorite-icon" onClick={() => toggleFavorite(product.id)}>
-                {favoriteProducts.includes(product.id)
-                  ? <FaHeart className="fav-icon-filled" />
-                  : <FaRegHeart className="fav-icon-empty" />}
-              </div>
-              <div className="view-product-container" onClick={() => handleViewProduct(product)}>
-                <AiFillEye className="view-icon" />
+      {/* Popular Products Section */}
+      <section className="products">
+        <h2>Popular Products</h2>
+        <div className="product-grid">
+          {currentProducts.map((item, index) => (
+            <div key={index} className="product-card">
+              <span className="sale-badge">Sale</span>
+              <img src={item.image} alt={item.name} className="product-img" />
+              <h3>{item.name}</h3>
+              <p>
+                <span className="sale-price">PKR {item.salePrice}</span>
+                <span className="original-price">PKR {item.originalPrice}</span>
+              </p>
+              <div className="product-actions">
+                <button className="quick-add" onClick={() => handleAddToCart(item)}>
+                  <GiShoppingCart /> Quick Add
+                </button>
+                <button className="quick-view" onClick={() => handleViewProduct(item)}>
+                  <AiFillEye /> Quick View
+                </button>
+                <button onClick={() => toggleFavorite(item.id)} className="favorite-btn">
+                  {favoriteProducts.includes(item.id) ? <FaHeart color="red" /> : <FaRegHeart />}
+                </button>
               </div>
             </div>
-            <img src={product.image} alt={product.name} className="product-image" />
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-            <p className="discount-tag">30% Off</p>
-            <p>Price: <s>{convertToPKR(product.price)}</s></p>
-            <p>Discounted Price: <strong>{convertToPKR(product.price * 0.7)}</strong></p>
-            <button
-              className="add-to-cart-button"
-              onClick={() => handleAddToCart(product)}
-            >
-              <GiShoppingCart className="cart-icon" /> Add to Cart
-            </button>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </section>
 
-      <div className="pagination-container">
-        <button
-          className="pagination-button"
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          &lt;
-        </button>
-        {[...Array(totalPages).keys()].map((number) => (
-          <button
-            key={number}
-            onClick={() => paginate(number + 1)}
-            className={currentPage === number + 1 ? 'active' : ''}
-          >
-            {number + 1}
-          </button>
-        ))}
-        <button
-          className="pagination-button"
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          &gt;
-        </button>
-      </div>
+      {/* Quick View Modal */}
+      {selectedProduct && (
+        <Modal show={showModal} onHide={closePopup} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedProduct.name}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="quick-view-container">
+              <img src={selectedProduct.image} alt={selectedProduct.name} className="quick-view-img" />
+              <div className="quick-view-details">
+                <p>Price: PKR {selectedProduct.salePrice}</p>
+                <p>Availability: In Stock</p>
+                <div className="quantity-section">
+                  <label htmlFor="quantity">Quantity:</label>
+                  <input type="number" id="quantity" name="quantity" defaultValue="1" min="1" />
+                </div>
+                <button className="add-to-cart-btn" onClick={() => handleAddToCart(selectedProduct)}>
+                  Add To Cart
+                </button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+      )}
 
       <ToastContainer />
 
-      {selectedProduct && (
-        <div className="popup-overlay" onClick={closePopup}>
-          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <AiFillCloseCircle className="close-icon" onClick={closePopup} />
-            <img src={selectedProduct.image} alt={selectedProduct.name} className="popup-product-image" />
-            <h2>{selectedProduct.name}</h2>
-            <p>{selectedProduct.description}</p>
-            <p className="discount-tag">30% Off</p>
-            <p>Price: <s>{convertToPKR(selectedProduct.price)}</s></p>
-            <p>Discounted Price: <strong>{convertToPKR(selectedProduct.price * 0.7)}</strong></p>
-            <button
-              className="add-to-cart-button"
-              onClick={() => handleAddToCart(selectedProduct)}
-            >
-              <GiShoppingCart className="cart-icon" /> Add to Cart
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Pagination */}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            className={currentPage === index + 1 ? 'active' : ''}
+            onClick={() => paginate(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </>
   );
 };
