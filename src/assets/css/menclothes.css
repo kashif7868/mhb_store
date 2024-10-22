@@ -1,0 +1,93 @@
+.product-card {
+    position: relative;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sale-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #f7b1ab;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.quick-view-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: none;
+    border-radius: 30px;
+}
+
+.product-card:hover .quick-view-btn {
+    display: block;
+}
+
+.product-name {
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+}
+
+.product-price {
+    margin: 10px 0;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.new-price {
+    color: #f04747;
+    font-weight: bold;
+}
+
+.quick-add-btn {
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 20px;
+    margin: 10px 0;
+}
+
+.favorite-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #f09a9a;
+}
+
+.favorite-icon svg {
+    transition: color 0.3s;
+}
+
+.favorite-icon:hover svg {
+    color: #ff5858;
+}

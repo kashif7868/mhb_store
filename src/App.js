@@ -20,6 +20,7 @@ import DesiGhee from "./pages/Food/DesiGhee";
 import Honey from "./pages/Food/Honey";
 import MobilePage from "./pages/Gadgets/Mobile";
 import SearchResultsPage from "./pages/SearchResultsPage"; // Import SearchResultsPage
+import TestPage from "./pages/TestPage"; // Import SearchResultsPage
 
 const AppContent = () => {
   const loading = useNavigationLoader();
@@ -45,6 +46,7 @@ const AppContent = () => {
           <Route path="/food/desi-ghee" element={<DesiGhee />} />
           <Route path="/food/honey" element={<Honey />} />
           <Route path="/gadgets/mobile" element={<MobilePage />} />
+          <Route path="/test_page" element={<TestPage/>}/>
         </Routes>
         <Footer />
       </>}

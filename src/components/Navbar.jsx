@@ -17,6 +17,9 @@ const Navbar = () => {
   const cart = useSelector((state) => state.cart?.cart || []);
   const cartCount = cart.reduce((acc, item) => acc + item.qty, 0);
 
+  const favorites = useSelector((state) => state.favorites.favorites || []); // Get favorites from Redux
+  const favoriteCount = favorites.length; // Count the number of favorite items
+
   const toggleMenu = () => setIsOpen(!isOpen);
   const handleDropdown = (category) => {
     setActiveDropdown((prev) => (prev === category ? null : category));
@@ -65,8 +68,8 @@ const Navbar = () => {
         <div className="right-icons">
           <div className="fav-prodect-list-container">
             <Link to="/favourit-list">
-              {cartCount > 0 && <span className="cart-badge-dot">{cartCount}</span>}
-              <MdOutlineFavorite  className="icon" />
+              {favoriteCount > 0 && <span className="cart-badge-dot">{favoriteCount}</span>} {/* Favorite counter */}
+              <MdOutlineFavorite className="icon" />
             </Link>
           </div>
           <div className="cart-icon-wrapper">
@@ -93,7 +96,6 @@ const Navbar = () => {
               <Link to="/clothing/men">Men</Link>
             </div>
           </li>
-
           <li className="dropdown" onClick={() => handleDropdown('food')}>
             <span>Food <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'food' ? 'rotated' : ''}`} /></span>
             <div className={`dropdown-content ${activeDropdown === 'food' ? 'show' : ''}`}>
@@ -108,7 +110,6 @@ const Navbar = () => {
               <Link to="/food/drinks">Drinks</Link>
             </div>
           </li>
-
           <li className="dropdown" onClick={() => handleDropdown('cosmetics')}>
             <span>Cosmetics <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'cosmetics' ? 'rotated' : ''}`} /></span>
             <div className={`dropdown-content ${activeDropdown === 'cosmetics' ? 'show' : ''}`}>
@@ -120,7 +121,6 @@ const Navbar = () => {
               <Link to="/cosmetics/hair-loss-products">Hair Loss Products</Link>
             </div>
           </li>
-
           <li className="dropdown" onClick={() => handleDropdown('fashion')}>
             <span>Fashion <RiArrowDropDownLine className={`dropdown-icon ${activeDropdown === 'fashion' ? 'rotated' : ''}`} /></span>
             <div className={`dropdown-content ${activeDropdown === 'fashion' ? 'show' : ''}`}>
@@ -129,7 +129,6 @@ const Navbar = () => {
               <Link to="/fashion/watches-glasses">Watches & Glasses</Link>
             </div>
           </li>
-
           <li><Link to="/health-care">Health Care</Link></li>
           <li><Link to="/tech-hub">Tech Hub</Link></li>
           <li><Link to="/toys-kids">Toys</Link></li>
